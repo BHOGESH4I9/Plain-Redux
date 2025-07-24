@@ -1,23 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import './redux';
+import Form from './components/Form';
+import Account from './components/Account';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-vh-100 d-flex justify-content-center align-items-center bg-light">
+      <div className="p-4 rounded shadow bg-white text-center" style={{ width: '500px' }}>
+        <h2 className="mb-4 fw-bold text-primary">Bank Account Dashboard</h2>
+        <Form />
+        <hr />
+        <Account />
+      </div>
     </div>
   );
 }
