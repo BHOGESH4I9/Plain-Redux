@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { deposit, withdraw, nameUpdate, mobileUpdate, reset} from "../redux/actions";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,10 @@ const Form = () => {
         <div className="col-4">
           <button
             className="btn btn-success  w-100"
-            onClick={() => dispatch({ type: "nameUpdate", payload: name })}
+            onClick={() =>{
+               dispatch(nameUpdate(name));
+               setName("");
+              }}
           >
             Update Name
           </button>
@@ -41,13 +45,17 @@ const Form = () => {
             type="number"
             placeholder="Enter amount to deposit"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) =>{setAmount(e.target.value);
+            }}
           />
         </div>
         <div className="col-4">
           <button
             className="btn btn-success w-100"
-            onClick={() => dispatch({ type: "deposit", payload: amount })}
+            onClick={() => {
+              dispatch(deposit(amount));
+              setAmount("");
+            }}
           >
             Deposit
           </button>
@@ -68,7 +76,10 @@ const Form = () => {
         <div className="col-4">
           <button
             className="btn btn-success  w-100"
-            onClick={() => dispatch({ type: "withdraw", payload: withdrawAmount })}
+            onClick={() => {
+              dispatch(withdraw(withdrawAmount));
+              setWithdrawAmount("");
+            }}
           >
             Withdraw
           </button>
@@ -92,12 +103,21 @@ const Form = () => {
         <div className="col-4">
           <button
             className="btn btn-success w-100"
-            onClick={() => dispatch({ type: "mobileUp", payload: mobile })}
+            onClick={() => {
+              dispatch(mobileUpdate(mobile));
+              setMobile("");
+            }}
           >
             Update Mobile
           </button>
         </div>
       </div>
+
+      <button 
+      className="btn btn-danger col-3 mt-2"
+      onClick={()=>dispatch(reset())}>
+        Reset
+      </button>
     </div>
   );
 };
