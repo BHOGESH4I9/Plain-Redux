@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { deposit, withdraw, nameUpdate, mobileUpdate, reset} from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { deposit, withdraw, nameUpdate, mobileUpdate, reset, creditTransaction, withdrawTransaction} from "../redux/actions";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -8,6 +8,10 @@ const Form = () => {
   const [amount, setAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [mobile, setMobile] = useState("");
+  const [id, setId] = useState(0);
+
+
+  const balance = useSelector((state) => state.account.balance);
 
   return (
     <div className="container mb-4">
@@ -24,7 +28,7 @@ const Form = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="col-4">
+        <div className="col-3">
           <button
             className="btn btn-success  w-100"
             onClick={() =>{
@@ -49,11 +53,14 @@ const Form = () => {
             }}
           />
         </div>
-        <div className="col-4">
+        <div className="col-3">
           <button
             className="btn btn-success w-100"
             onClick={() => {
               dispatch(deposit(amount));
+              const newBalance = balance + +amount;
+              dispatch(creditTransaction(amount, newBalance, id));
+              setId(id + 1);
               setAmount("");
             }}
           >
@@ -73,11 +80,14 @@ const Form = () => {
             onChange={(e) => setWithdrawAmount(e.target.value)}
           />
         </div>
-        <div className="col-4">
+        <div className="col-3">
           <button
             className="btn btn-success  w-100"
             onClick={() => {
               dispatch(withdraw(withdrawAmount));
+              const newBalance = balance - +withdrawAmount;
+              dispatch(withdrawTransaction(withdrawAmount, newBalance, id));
+              setId(id + 1);
               setWithdrawAmount("");
             }}
           >
@@ -100,7 +110,7 @@ const Form = () => {
             }}
           />
         </div>
-        <div className="col-4">
+        <div className="col-3">
           <button
             className="btn btn-success w-100"
             onClick={() => {
