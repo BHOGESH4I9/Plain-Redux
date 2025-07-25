@@ -19,3 +19,29 @@ export function mobileUpdate(number){
 export function reset(){
     return {type: "reset"}
 }
+
+export function creditTransaction(amount, balance, id) {
+  return {
+    type: "ADD_TRANSACTION",
+    payload: {
+      id,
+      amount,
+      balance,
+      type: "Credit",
+      date: new Date()
+    }
+  };
+}
+
+export function withdrawTransaction(amount, balance, id) {
+  return {
+    type: "ADD_TRANSACTION",
+    payload: {
+      id,
+      amount,
+      balance,
+      type: "Debit",
+      date: new Date()
+    }
+  };
+}
